@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}" /> 
+    <title>Comparador de Precios</title>
+</head>
+
+<body>
+    <nav class="menu">
+        <div class="container">
+            <div id="nav-title">
+                <a class="navbar-index" href="{{ url_for('index') }}">
+                    <img src="{{ url_for('static', filename='img/grocery-guru-high-resolution-logo-transparent.png') }}" alt="Logo Grocery Guru" class="logo">
+                    GROCERY GURU
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div id="background-header">
+            <div class="overlay">
+                <div class="container-product">
+                    <div class="intro-text">
+                        <h1>Comparador de Precios de Productos de Supermercados</h1>
+                        <h2>Introduzca el nombre del producto que desea buscar: </h2>
+                        <div class="search-container">
+                            <form action="{{ url_for('procesar') }}" method="get">
+                                <input type="text" class="search-box" name="producto" placeholder="Buscar..." autocomplete="off"/>
+                                <select name="orden">
+                                    <option value="default">Ordenar por defecto</option>
+                                    <option value="asc">Precio de menor a mayor</option>
+                                    <option value="desc">Precio de mayor a menor</option>
+                                </select>
+                                <button class="search-button">Buscar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="principal-productos">
+            <div class="productos">
+                <hr>
+                {% if lista %}
+                    {% for elem in lista %}
+                        <div class="columns">
+                            <div class="container">
+                                <h2>{{ elem.nombre }}</h2>
+                                <p>Precio: {{ elem.precio }}</p>
+                                <h3>Supermercado: {{ elem.supermercado }}</h3>
+                                <a href="{{ elem.enlace }}" target="_blank">Ver producto</a>
+                                <div class="row">
+                                    <img src="{{ elem.urlImagen }}" alt="Imagen del producto" class="product-image">
+                                    <img src="{{ url_for('static', filename='img/' + elem.logo + '-logo.png') }}" alt="logo supermercado" class="supermarket-logo">
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% if lista is not none %}
+                        <div class="producto-no-encontrado">
+                            <h3>No se ha encontrado ningún producto.</h3>
+                            <img class="not-found" src="{{ url_for('static', filename='img/grocery-guru-high-resolution-logo.png') }}" alt="error 404"/>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div id="footer-info">
+            <ul id="footer-options">
+                <li>&copy; 2024 GROCERY GURU.</li>
+                <li>Universidad de Granada</li>
+                <li>Doble grado en Ingeniería Informática y ADE</li>
+                <li>Asignatura: Ingeniería de Sistemas de Información</li>
+                <li>Práctica realizada por Rafael Luque Framit y Guillermo López Jiménez</li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>
+
+

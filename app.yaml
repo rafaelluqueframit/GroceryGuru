@@ -1,0 +1,17 @@
+runtime: python310
+
+handlers:
+- url: /static  # Configuramos la ruta para los archivos estáticos (CSS, JavaScript, imágenes, etc.)
+  static_dir: static
+
+- url: /.*
+  script: auto  # Usamos 'auto' para que App Engine detecte automáticamente tu aplicación
+
+instance_class: F4
+
+automatic_scaling:
+  min_idle_instances: 0
+  max_idle_instances: automatic
+  min_pending_latency: automatic
+  max_pending_latency: automatic
+  min_instances: 0
